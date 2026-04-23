@@ -132,7 +132,7 @@ class GameController:
             GerenciadorEstado.registrar_fim_partida_atualizacao_global("quit", self.mapa_atual)
             self.root.unbind("<w>")
             self.root.unbind("<a>") # Trava input pós jogo
-            self.view.mostrar_mensagem_gui("Abandono", "Você abandonou o mapa.")
+            self.view.mostrar_mensagem_gui("Abandono", "Você abandonou a operação no mapa.")
             self.finalizar_volta_menu()
             return
             
@@ -183,7 +183,7 @@ class GameController:
             GerenciadorEstado.registrar_fim_partida_atualizacao_global("explosao", self.mapa_atual)
             self._renderizar_rodada_atual(trilhas_fogo=trilhas_fogo) # Redesenha estado da cratera + fogo
             self.desatar_inputs()
-            self.view.exibir_game_over("GAME OVER", "Você explodiu na própria bomba!", eh_vitoria=False)
+            self.view.exibir_game_over("Fim de Jogo", "Você foi atingido pela própria explosão!", eh_vitoria=False)
             return
 
         # 2. INIMIGOS e CONDIÇÕES
@@ -196,7 +196,7 @@ class GameController:
             GerenciadorEstado.registrar_fim_partida_atualizacao_global("vitoria", self.mapa_atual)
             self._renderizar_rodada_atual(trilhas_fogo=trilhas_fogo)
             self.desatar_inputs()
-            self.view.exibir_game_over("VITÓRIA!", "Resgate garantido - Tempo limite alcançado", eh_vitoria=True)
+            self.view.exibir_game_over("VITÓRIA!", "Resgate garantido - Tempo limite alcançado com sucesso.", eh_vitoria=True)
             return
             
         taxa = sessao.get("taxa_spawn_atual", 10.0)
@@ -208,7 +208,7 @@ class GameController:
             GerenciadorEstado.registrar_fim_partida_atualizacao_global("inimigo", self.mapa_atual)
             self._renderizar_rodada_atual(trilhas_fogo=trilhas_fogo)
             self.desatar_inputs()
-            self.view.exibir_game_over("GAME OVER", "O inimigo te atingiu!.", eh_vitoria=False)
+            self.view.exibir_game_over("Fim de Jogo", "O inimigo o atingiu de forma fatal!", eh_vitoria=False)
             return
             
         if code_spwn == "SPAWN_SUCESSO":
@@ -218,7 +218,7 @@ class GameController:
             GerenciadorEstado.atualizar_sessao("taxa_spawn_atual", taxa + 5.0)
 
         # Fim seguro: Turno passou sem gameover
-        msg = "Alerta: Inimigo Spawnado!" if code_spwn == "SPAWN_SUCESSO" else None
+        msg = "Alerta: Inimigo posicionado no mapa!" if code_spwn == "SPAWN_SUCESSO" else None
         self._renderizar_rodada_atual(msg_alerta=msg, trilhas_fogo=trilhas_fogo)
 
     def desatar_inputs(self):

@@ -85,11 +85,11 @@ class GameView:
         hud_frame = tk.Frame(self.container, bg="#111111", height=60)
         hud_frame.pack(side=tk.TOP, fill=tk.X)
         
-        self.hud_texto.set("Iniciando partida...")
+        self.hud_texto.set("Inicializando os sistemas de partida...")
         tk.Label(hud_frame, textvariable=self.hud_texto, font=self.font_text, bg="#111111", fg=self.cores["texto"]).pack(side=tk.LEFT, padx=20, pady=15)
         
         # Info comandos
-        tk.Label(hud_frame, text="W A S D: Mover  |  B: Bomba  |  Q: Abandonar", font=("Helvetica", 10), bg="#111111", fg=self.cores["texto_secundario"]).pack(side=tk.RIGHT, padx=20, pady=20)
+        tk.Label(hud_frame, text="Controles - W/A/S/D: Mover | B: Plantar Bomba | Q: Abandonar Incursão", font=("Helvetica", 10), bg="#111111", fg=self.cores["texto_secundario"]).pack(side=tk.RIGHT, padx=20, pady=20)
         
         # Centro: Área do Canvas (Grid do Jogo)
         self.canvas_frame = tk.Frame(self.container, bg=self.cores["canvas_bg"])

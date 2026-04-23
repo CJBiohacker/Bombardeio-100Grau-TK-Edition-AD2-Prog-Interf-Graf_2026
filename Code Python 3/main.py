@@ -146,7 +146,7 @@ if __name__ == "__main__":
             jogador_vivo = mapa.processar_bombas()
             if not jogador_vivo:
                 print("\n==================================")
-                print("GAME OVER! Explodido!")
+                print("Fim de Jogo! Explodido!")
                 print("==================================\n")
                 GerenciadorEstado.registrar_fim_partida_atualizacao_global("explosao", mapa)
                 break
@@ -176,7 +176,7 @@ if __name__ == "__main__":
             
             if not jogo_ativo:
                 print("\n==================================")
-                print("GAME OVER! Você foi pego!")
+                print("Fim de Jogo! Você foi pego!")
                 print("==================================\n")
                 GerenciadorEstado.registrar_fim_partida_atualizacao_global("inimigo", mapa)
                 break

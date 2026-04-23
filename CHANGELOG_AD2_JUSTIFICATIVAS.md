@@ -1,11 +1,11 @@
-# Justificativas de Alteração (AD2 GUI FIX)
+# Justificativas de Alteração Arquitetural (AD2-GUI-FIX)
 
-A fundação fornecida e definida na AD1 foi mantida integralmente (MVC rigoroso). As mínimas modificações no arquivo `classes.py` foram feitas puramente para acomodar o padrão MVC com a View e Controller rodando via Tkinter, evitando ao máximo qualquer modificação nas engrenagens e nas implementações de regra do objeto em si.
+A fundação lógica estruturada e avaliada na AD1 foi preservada em sua totalidade, seguindo rigorosamente as diretrizes do padrão MVC. As intervenções pontuais realizadas no arquivo `classes.py` tiveram como único propósito viabilizar a comunicação com as novas camadas de visualização (*View*) e controle (*Controller*) gerenciadas pela biblioteca Tkinter. Dessa forma, garantiu-se que as regras de negócio e os mecanismos de processamento interno permanecessem inalterados.
 
-## Modificação 01: Exposição de Atributos Privados
-- **Arquivos Alterados:** `Code Python 3/classes.py`
-- **Trecho Anterior:** O acesso à matriz de células do grid e objetos de ambiente e entidade estavam presos no método padrão `__str__` (feito originariamente para terminal print). Ex: Instância tinha `self.__linhas`, `self.__celulas`, `self.__bombas`.
-- **Trecho Novo:** Adicionadas anotações em classe `@property` (Getters) para retorno de leitura pública das variáveis: 
-  - `linhas` / `colunas` -> Necessário para cálculos matemáticos relativos ao resizer da GUI Tkinter baseada em `event.width / self.mapa.colunas`.
-  - `celulas`, `jogadores`, `bombas` -> Para renderização vetorial no componente Tkinter Canvas, mantendo o Controller livre de gambiarras para interpretar matriz e objetos.
-- **Motivação Arquitetural:** O Tkinter Controller e sua UI derivada de View necessitam ter autoridade de _Read Only_ no estado do Modelo do Game a todo tempo, para realizar _Re-Render_ do palco e também poder efetuar tracking da coordenada `x/y` ou instanciar frames visuais de transição, isso não pode ser feito interceptando Strings (stdout) de um método de Console (`__str__`). Para evitar a quebra dessa regra central e evitar o vazamento da View ou dependência de pacotes na camada de regras, expusemos essas propriedades.
+## Modificação 01: Exposição Controlada de Atributos Privados
+- **Arquivos Alterados:** `Code Python 3/classes.py` e `Code Python 2/classes.py`
+- **Contexto Original:** O acesso à matriz de células do grid, bem como aos objetos do ambiente e às entidades, encontrava-se restrito e inacessível externamente, sendo processado unicamente pelo método nativo `__str__` (projetado originalmente para impressões estáticas em terminais de texto). Por exemplo: a instância possuía os atributos privados `self.__linhas`, `self.__celulas` e `self.__bombas`.
+- **Implementação Realizada:** Foram incorporados decoradores nativos da linguagem (`@property`) atuando como *Getters*, com a finalidade de fornecer permissão de leitura pública e controlada para as seguintes variáveis:
+  - `linhas` / `colunas`: Indispensáveis para a realização de cálculos matemáticos de dimensionamento geométrico dinâmico da interface gráfica, orientados pelo redimensionamento da janela do sistema operacional.
+  - `celulas`, `jogadores`, `bombas`: Essenciais para a renderização vetorial no componente *Canvas* do Tkinter, eximindo o controlador de adotar soluções paliativas ("gambiarras") para decodificar a matriz e o estado dos objetos.
+- **Motivação Arquitetural:** Em uma arquitetura orientada a eventos (*Event-Driven*), a interface gráfica (View) e o Controlador necessitam de autoridade de leitura (*Read-Only*) contínua sobre o estado atual do Modelo. Essa permissão é fundamental para executar atualizações frequentes da tela (*Re-Render*) e para monitorar coordenadas (`x` e `y`) necessárias na projeção de efeitos visuais. Tal necessidade técnica torna inviável a prática antiga de interceptar as formatações de *strings* de console. Assim, a exposição via propriedades revelou-se a solução mais limpa e arquiteturalmente segura, evitando o acoplamento de bibliotecas externas na camada central do jogo.

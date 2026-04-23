@@ -226,9 +226,9 @@ class Mapa:
                 
                 conteudo = self.__celulas[nx][ny]
                 
-                # Se for o jogador -> GAME OVER IMEDIATO
+                # Se for o jogador -> Fim de Jogo IMEDIATO
                 if isinstance(conteudo, Jogador):
-                    print(f"GAME OVER: O inimigo te alcançou em ({nx}, {ny})!")
+                    print(f"Fim de Jogo: O inimigo o alcançou na coordenada ({nx}, {ny})!")
                     return False, base_spawn_rate
                 
                 # Se for vazio, é um movimento válido
@@ -266,7 +266,7 @@ class Mapa:
                 # Spawnar
                 spawnou = self.__tentar_spawnar_inimigo_extra()
                 if spawnou:
-                    print(f"ALERTA: Um novo inimigo surgiu! (Turno {turno_atual})")
+                    print(f"Alerta: Um novo inimigo surgiu no mapa! (Turno {turno_atual})")
                     return True, "SPAWN_SUCESSO"
             else:
                 # Não spawnou -> Aumenta chance para próxima
@@ -306,7 +306,7 @@ class Mapa:
 
         # Se for válido, adiciona
         if self.posicao_valida(x, y):
-            print(f"Bomba plantada em ({x}, {y})")
+            print(f"Bomba armada na coordenada ({x}, {y})")
             nova_bomba = Bomba(x, y, tempo, alcance)
             
             # Se a célula estiver vazia (sem jogador mas jogador acabou de sair..?), 
@@ -339,7 +339,7 @@ class Mapa:
         jogador_vivo = True
         
         for bomba in bombas_para_explodir:
-            print(f"BOMBA EXPLODIU EM ({bomba.x}, {bomba.y})!")
+            print(f"Detonação ocorrida na coordenada ({bomba.x}, {bomba.y})!")
             
             # Remove da lista
             self.__bombas.remove(bomba)
@@ -389,7 +389,7 @@ class Mapa:
         """Verifica se algum jogador está na coordenada e printa morte."""
         for jog in self.__jogadores:
             if jog.x == x and jog.y == y:
-                print(f"GAME OVER: Você explodiu sua própria bomba ou foi pego na explosão em ({x}, {y})!")
+                print(f"Fim de Jogo: Você foi atingido por uma explosão na coordenada ({x}, {y})!")
                 return True
         return False
 
@@ -404,7 +404,7 @@ class Mapa:
         # Se tiver inimigo, remove ele
         for inimigo in list(self.__inimigos): # Copia para evitar erro de iteração
             if inimigo.x == x and inimigo.y == y:
-                print(f"Um Inimigo foi ELIMINADO em ({x}, {y})!")
+                print(f"Um inimigo foi eliminado na coordenada ({x}, {y})!")
                 self.__inimigos.remove(inimigo)
                 self.__celulas[x][y] = None
                 GerenciadorEstado.incrementar_sessao("total_inimigos_vivos", -1) # Decrementa contador? Ou apenas remove?
@@ -418,7 +418,7 @@ class Mapa:
                  return True # Para a explosão
             else:
                  # Destrutível: Destrói e Para a explosão
-                 print(f"Obstáculo destruído em ({x}, {y})")
+                 print(f"Obstáculo destruído na coordenada ({x}, {y})")
                  self.__celulas[x][y] = None
                  GerenciadorEstado.incrementar_sessao("obstaculos_destruidos_sessao", 1)
                  return True 
@@ -450,22 +450,22 @@ class Mapa:
 
         # 1. Validar limites do mapa
         if not self.posicao_valida(novo_x, novo_y):
-            print("\nMovimento inválido: fora dos limites do mapa. (Você perdeu o turno esperando)")
+            print("\nMovimento inválido: posição fora dos limites do mapa. (Você perdeu o turno aguardando).")
             return True # Conta como turno, mas não move
 
         # 2. Verificar conteúdo da célula destino
         conteudo_destino = self.__celulas[novo_x][novo_y]
 
         if isinstance(conteudo_destino, Obstaculo):
-            print("\nMovimento inválido: Obstáculo no caminho. (Você perdeu o turno esperando)")
+            print("\nMovimento inválido: obstáculo no caminho. (Você perdeu o turno aguardando).")
             return True
 
         if isinstance(conteudo_destino, Bomba):
-            print("\nMovimento inválido: existe uma Bomba aqui.")
+            print("\nMovimento bloqueado: existe uma bomba armada nesta posição.")
             return False
 
         if isinstance(conteudo_destino, Inimigo):
-            print("\nGAME OVER: O inimigo te pegou !")
+            print("\nFim de Jogo: O inimigo o capturou!")
             # Lógica de fim de jogo aqui (nao removemos do mapa para mostrar onde morreu)
             return True
 
@@ -522,9 +522,9 @@ class Obstaculo:
 
     def destruir(self):
         if self.__tipo == "destrutível":
-            return print("O Obstáculo foi destruído.")
+            return print("O obstáculo foi completamente destruído.")
         else:
-            return print("O Obstáculo é indestrutível.")
+            return print("Este obstáculo é de natureza indestrutível.")
 
 
 class Inimigo:
@@ -532,4 +532,4 @@ class Inimigo:
         self.__nome = nome
 
     def movimentar(self):
-        return print(f"{self.__nome} se moveu.")
+        return print(f"{self.__nome} realizou um movimento.")

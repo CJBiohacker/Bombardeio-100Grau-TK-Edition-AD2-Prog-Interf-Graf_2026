@@ -61,8 +61,8 @@ python3 --version
 ```bash
 sudo apt update
 sudo apt install python3      # Para instalar Python 3
-# Para Python 2 (necessário em distros legadas ou via PPA):
-sudo apt install python2
+# Para testar a versão legada (Python 2) instale o base e a interface gráfica:
+sudo apt install python2 python-tk
 ```
 
 **Fedora/RHEL/CentOS (`dnf`):**
@@ -70,7 +70,12 @@ sudo apt install python2
 ```bash
 sudo dnf install python3      # Para instalar Python 3
 ```
-*(Nota: O Python 2 foi retirado da maioria dos repositórios nativos atuais.)*
+
+> [!WARNING]
+> **Sobre o Python 2 e Bibliotecas Gráficas em Distros Modernas:**
+> O Python 2 atingiu seu **End of Life (EOL)** oficial. Distribuições *cutting-edge* modernas, como o **Fedora**, Arch Linux e algumas versões recentes do Ubuntu, **removeram por completo** o pacote `python2` e o pacote de interface gráfica `python2-tkinter` (ou `python-tk`) de seus repositórios principais.
+> 
+> A pasta `Code Python 2` existe neste projeto **estritamente para cumprir o requisito acadêmico de compatibilidade retroativa**. Caso não consiga rodar o código do Python 2 em sua máquina Linux moderna devido à falta da biblioteca `_tkinter` compilada, utilize o diretório `Code Python 3`, ou valide a versão legada em um ambiente Windows (cujo instalador oficial traz o Tkinter embutido) ou em sistemas Unix legados.
 
 **Arch Linux/Manjaro (`pacman`):**
 
@@ -91,7 +96,7 @@ Recomendamos utilizar o instalador interativo **Homebrew**:
 
 ```bash
 brew install python           # Instala Python 3 nativo
-brew install python@2         # Instala Python 2 legacia (se disponível no pacote)
+brew install python@2         # Instala Python 2 legado (se disponível no pacote)
 ```
 
 ---
