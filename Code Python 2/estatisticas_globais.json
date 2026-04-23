@@ -1,0 +1,34 @@
+{
+    "soma_obstaculos_destruidos": 20, 
+    "historico_causas_termino": [
+        "inimigo", 
+        "inimigo", 
+        "inimigo"
+    ], 
+    "historico_turnos_sobrevividos": [
+        55, 
+        29, 
+        59
+    ], 
+    "historico_obstaculos_destruidos_partida": [
+        9, 
+        6, 
+        5
+    ], 
+    "media_turnos": 47.67, 
+    "fator_dificuldade_inimigos": 1.0, 
+    "soma_turnos_sobrevividos": 143, 
+    "historico_total_obstaculos": [
+        19, 
+        19, 
+        17
+    ], 
+    "limite_max_turnos": 100, 
+    "densidade_obstaculos": 0.48, 
+    "alcance_bomba": 2, 
+    "soma_bombas_utilizadas": 30, 
+    "media_bombas": 10.0, 
+    "taxa_destruicao_media": 36.36, 
+    "tempo_detonacao_bomba": 3, 
+    "partidas_jogadas": 3
+}
